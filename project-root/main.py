@@ -1,11 +1,11 @@
 import os
-import fitz  # PyMuPDF
 from utils.parser import extract_text_blocks
 from utils.heading_detector import detect_headings
 from utils.json_writer import write_json
+import time
 
-INPUT_DIR = "/app/input"
-OUTPUT_DIR = "/app/output"
+INPUT_DIR = "input"
+OUTPUT_DIR = "output"
 
 def process_pdf(pdf_path, output_path):
     blocks = extract_text_blocks(pdf_path)
@@ -13,6 +13,8 @@ def process_pdf(pdf_path, output_path):
     write_json(title, outline, output_path)
 
 def main():
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
     for file in os.listdir(INPUT_DIR):
         if file.endswith(".pdf"):
             pdf_path = os.path.join(INPUT_DIR, file)
@@ -22,3 +24,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+start_time = time.time()
+
+# ---- your main code ----
+# For example:
+print("Processing PDF...")
+# Your extraction function
+# -------------------------
+
+end_time = time.time()
+print(f"Execution Time: {end_time - start_time:.2f} seconds")
